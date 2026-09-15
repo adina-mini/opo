@@ -1,0 +1,18 @@
+# Virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# API keys and secrets
+.env
+
+# Groq extraction cache
+discovery/.cache/
+.cache/
+
+# VS Code
+.vscode/
+
+# OS junk
+.DS_Store
+Thumbs.db
