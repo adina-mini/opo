@@ -1,75 +1,62 @@
 # opo — Personal Opportunity Agent
 
-A personal agent that finds jobs, internships, fellowships, scholarships, research positions, and hackathons tailored to one person's profile, explains why each one fits, prepares the application, and lets the user approve before anything is sent.
+A personal agent that finds jobs, internships, fellowships, scholarships,
+research positions, and hackathons that fit your profile — explains why
+each one fits, prepares a draft application, and always waits for your
+approval before anything is sent.
 
-**Apply model: draft-then-approve.** The agent never submits anything on its own.
+**Draft-then-approve, always.** opo never auto-submits an application.
+It finds, scores, and prepares; you make the final call.
 
----
+## What it does
 
-## Key Features
+- **Matching engine** — scores listings against your profile. Skills
+  drive ~80% of the score. Employment type (full-time/part-time/
+  internship/fellowship) never penalizes a match. Unpaid opportunities
+  are welcomed by default. Application fees are flagged as a trust
+  signal rather than an automatic rejection. Every result comes with
+  plain-language reasons and flags — nothing is silently guessed.
+- **Live discovery** — pulls real listings from the Remotive and
+  Arbeitnow APIs, deduplicated across sources.
+- **Groq-powered extraction & drafting** — uses your own Groq API key to
+  extract structured skills from messy job descriptions and draft
+  tailored cover letters.
+- **Draft vault** — every prepared application persists through
+  `shortlisted → drafting → needs_input → ready → submitted`, so nothing
+  is a one-shot notification you lose track of.
+- **"Things you don't know" pings** — surfaces anything a listing needs
+  that isn't in your profile (a nomination letter, a portfolio link)
+  instead of guessing or ignoring it.
 
-1. **Strict Matching Engine**:
-   - **Hard Rejects First**: Title/description matches user's excluded keywords, or misses 100% of required skills.
-   - **Skills are ~80% of the score**: Focuses on genuine capability fit.
-   - **Opportunity Type is Neutral**: Opportunity types (fellowship, job, internship, etc.) are informational only and never penalize the match score.
-   - **Unpaid Opportunities Welcomed**: Unpaid listings (`unpaid: true`) score 1.0 compensation fit by default unless the user explicitly configured a required minimum.
-   - **Location Mismatches are Soft**: Highlights relocation needs without hard-filtering high skills fit; flags unknown locations rather than guessing.
-   - **Application Fee Trust Signal**: Discounts score (~0.6x), marks `payment_required`, and surfaces prominent verification warnings.
-   - **Reasons & Flags**: Human-readable checkmarks (`✓`/`✗`) per requirement and explicit flags for ambiguous items.
+## Privacy
 
-2. **Draft-Then-Approve Vault**:
-   - Persistent application lifecycle state machine:
-     `discovered` → `shortlisted` → `drafting` → `needs_input` → `ready` → `submitted` → outcomes (`interview`/`offer`/`rejected`).
-   - "Things you don't know" pings surface unusual requirements (nomination letters, portfolios, video introductions) before moving to `ready`.
-   - In-place application draft editing and official site application links.
+- Your Groq API key and all your data (profile, drafts, application
+  status) live only in your own browser's local storage.
+- No accounts, no developer-controlled server, no cross-device sync.
+- CV text, once uploaded, is parsed in-browser and sent directly to
+  Groq's API — never to any server the developer controls.
 
-3. **Zero-Knowledge & Privacy**:
-   - **Local-Only Data**: Profile, preferences, drafts, and answer library are stored strictly in the user's browser (`localStorage` / `IndexedDB`).
-   - **Direct Groq Connection**: User's Groq API key is kept exclusively in browser storage; requests go directly to Groq's CORS-enabled endpoint (`https://api.groq.com/openai/v1/chat/completions`) and never touch an intermediary developer server.
+## Tech
 
-4. **Discovery Feeds**:
-   - Live verified public sources: **Remotive API** + **Arbeitnow Public API** (with stateless serverless `/api/proxy` fallback for CORS-restricted networks).
-   - Test fixtures are isolated in `tests/fixtures/` and never leaked into live user daily reports.
+- Vite + vanilla JS PWA, installable to your home screen.
+- Vitest for automated testing (matching engine, discovery/dedup logic).
+- A serverless proxy (`api/proxy.js`) as a CORS fallback for discovery
+  sources that block direct browser requests.
 
----
+## Getting started
 
-## Design System & Aesthetics
-
-- **Color Palette**: Muted dusty sage (`#819288`), warm greige surfaces (`#f8f7f4`, `#ffffff`), soft clay (`#c7b9ab`), and dark charcoal ink (`#222825`, no pure black).
-- **Typography**: Editorial serif headings (`'Newsreader'`) paired with clean humanist sans (`'Plus Jakarta Sans'`).
-- **Tactile UI**: Generous whitespace, soft rounded corners, score badges, status pills, and responsive mobile PWA navigation.
-
----
-
-## Getting Started
-
-### Development
 ```bash
-# Install dependencies
 npm install
-
-# Start local dev server (http://localhost:5173)
 npm run dev
 ```
 
-### Automated Tests (Vitest)
-```bash
-# Run all automated test suites
-npm test
-```
+Open the local URL it gives you, enter your Groq API key (free tier
+available at console.groq.com), and follow onboarding.
 
-### Production Build
-```bash
-# Build production bundle
-npm run build
+## Known gaps
 
-# Preview build locally
-npm run preview
-```
-
----
-
-## Future Roadmap: Dedicated Fellowship & Scholarship Ingestion
-Because no free, turnkey, open public REST APIs exist specifically for international fellowships and scholarships, the next phase will introduce:
-- An ATS-native crawler (Greenhouse, Lever, Workday) for university research labs and academic fellowships.
-- An RSS feed ingestor for academic and foundation grant bulletins (EURAXESS, government portals).
+- No dedicated fellowship/scholarship/research-specific source yet —
+  Remotive and Arbeitnow are both general job boards. Worth adding a
+  real source for this later; don't fabricate one.
+- Local-only storage means no sync across devices for the same person —
+  deliberate for now, revisit only if that becomes a real need.

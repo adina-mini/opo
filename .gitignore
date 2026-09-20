@@ -2,3 +2,13 @@ node_modules/
 dist/
 .env
 .env.local
+.vercel
+
+# Python (legacy CLI prototype)
+__pycache__/
+*.pyc
+discovery/.cache/
+
+# OS/editor
+.DS_Store
+Thumbs.db
