@@ -1,0 +1,82 @@
+/* ==========================================================================
+   opo Design System Variables
+   Color palette: Muted dusty sage (#819288), warm greige, soft clay, charcoal
+   Typography: Editorial serif headings ('Newsreader') + humanist sans ('Plus Jakarta Sans')
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Brand Sage Palette */
+  --color-sage: #819288;
+  --color-sage-dark: #5f7166;
+  --color-sage-deep: #445249;
+  --color-sage-light: #9fb1a6;
+  --color-sage-wash: #edf2ee;
+  --color-sage-tint: #f4f7f5;
+
+  /* Warm Greige & Clay Surfaces */
+  --color-bg-canvas: #f8f7f4;
+  --color-bg-card: #ffffff;
+  --color-bg-subtle: #f2efe9;
+  --color-border-subtle: #e6e2da;
+  --color-border-strong: #cfc9be;
+
+  --color-clay: #c7b9ab;
+  --color-clay-wash: #f9f6f2;
+  --color-clay-dark: #8c7867;
+
+  /* Charcoal Text & Neutral Ink (No pure black!) */
+  --color-text-primary: #222825;
+  --color-text-secondary: #515c55;
+  --color-text-muted: #79867e;
+  --color-text-faint: #a6b1aa;
+  --color-text-inverse: #ffffff;
+
+  /* Semantic Signals (Muted, Dusty, Human) */
+  --color-match-pill: #e6ede8;
+  --color-match-text: #375945;
+  --color-match-border: #b8cfc1;
+
+  --color-warn-wash: #fbf4ea;
+  --color-warn-text: #8e5828;
+  --color-warn-border: #e8d0b5;
+
+  --color-fee-wash: #faedf0;
+  --color-fee-text: #963b4b;
+  --color-fee-border: #e8b6c0;
+
+  --color-info-wash: #f0f3f6;
+  --color-info-text: #415566;
+  --color-info-border: #c8d3dd;
+
+  /* Subtle Warm Red / Urgent Accent (Refined terracotta/coral, not harsh) */
+  --color-urgent-wash: #fdf3f3;
+  --color-urgent-text: #b91c1c;
+  --color-urgent-border: #f8b4b4;
+  --color-urgent-glow: rgba(220, 38, 38, 0.08);
+
+  /* Typography */
+  --font-serif: 'Newsreader', Georgia, Cambria, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', ui-monospace, Menlo, Monaco, monospace;
+
+  /* Spacing & Radii (Soft, cute, tactile) */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+  --radius-pill: 9999px;
+
+  /* Elevation / Shadows */
+  --shadow-subtle: 0 2px 8px rgba(34, 40, 37, 0.04);
+  --shadow-card: 0 4px 18px rgba(34, 40, 37, 0.06);
+  --shadow-float: 0 12px 32px rgba(34, 40, 37, 0.09);
+  --shadow-modal: 0 20px 48px rgba(34, 40, 37, 0.16);
+
+  /* Transitions */
+  --transition-fast: 140ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-base: 220ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-bounce: 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
