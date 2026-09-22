@@ -371,7 +371,7 @@ export function openAutofillAssistantModal(profile, app, targetUrl, onUpdate) {
 
       <!-- Footer -->
       <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-border-subtle); padding-top: 14px; flex-wrap: wrap; gap: 10px;">
-        <a href="${targetUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="text-decoration: none;">
+        <a href="${targetUrl}" id="reopen-site-btn" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="text-decoration: none;">
           Re-open Official Page ↗
         </a>
         <div style="display: flex; gap: 8px;">
@@ -421,9 +421,12 @@ export function openAutofillAssistantModal(profile, app, targetUrl, onUpdate) {
   });
 
   // Re-open page button
-  assistantBackdrop.querySelector('#reopen-site-btn').onclick = () => {
-    window.open(targetUrl, '_blank', 'noopener,noreferrer');
-  };
+  const reopenBtn = assistantBackdrop.querySelector('#reopen-site-btn');
+  if (reopenBtn) {
+    reopenBtn.onclick = () => {
+      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    };
+  }
 
   // Mark Submitted button
   assistantBackdrop.querySelector('#mark-applied-btn').onclick = () => {
