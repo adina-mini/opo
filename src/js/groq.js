@@ -355,7 +355,7 @@ Do NOT use robotic clichés, preamble, or sycophantic filler. Write in a thought
 
 Applicant Profile:
 Name: ${profile.name}
-Email: ${profile.email}${linksExcerpt}
+Email: ${profile.email}${profile.phone ? `\nPhone: ${profile.phone}` : ''}${linksExcerpt}
 Skills: ${(profile.skills || []).map(s => `${s.name} (${s.level})`).join(', ')}
 Education: ${(profile.education || []).map(e => `${e.degree} at ${e.institution}`).join(', ')}
 ${cvExcerpt}
@@ -439,15 +439,17 @@ Rules:
    - "intermediate" = mentioned with moderate experience or listed among secondary skills.
    - "beginner" = briefly mentioned, coursework-only, or listed as "familiar with" / "exposure to".
 4. For each skill, infer a short category if obvious (e.g. "programming", "design", "healthcare", "analytics", "language", "management"). Use null if unclear.
-5. Extract LinkedIn URL if present in the resume.
-6. Extract GitHub URL if present in the resume (e.g. https://github.com/username).
-7. Extract portfolio or personal website URL if present in the resume.
-8. Do NOT invent information not present in the text. If a field is absent, omit it or use null.
+5. Extract phone number if present in the resume.
+6. Extract LinkedIn URL if present in the resume.
+7. Extract GitHub URL if present in the resume (e.g. https://github.com/username).
+8. Extract portfolio or personal website URL if present in the resume.
+9. Do NOT invent information not present in the text. If a field is absent, omit it or use null.
 
 Output ONLY valid JSON with this exact shape:
 {
   "name": "Full Name",
   "email": "email@example.com",
+  "phone": "+1 (555) 000-0000",
   "linkedin_url": "https://linkedin.com/in/...",
   "github_url": "https://github.com/...",
   "portfolio_url": "https://example.com",
@@ -611,6 +613,7 @@ export async function extractProfileFromCV(cvText, customApiKey = null) {
   const result = {
     name: (parsed.name || '').trim(),
     email: (parsed.email || '').trim(),
+    phone: (parsed.phone || '').trim(),
     linkedin_url: (parsed.linkedin_url || '').trim(),
     github_url: (parsed.github_url || '').trim(),
     portfolio_url: (parsed.portfolio_url || '').trim(),

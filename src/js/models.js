@@ -114,6 +114,7 @@ export function createPreferences(overrides = {}) {
  * @typedef {Object} Profile
  * @property {string} name
  * @property {string} email
+ * @property {string} [phone]
  * @property {Skill[]} skills
  * @property {Education[]} education
  * @property {Preferences} preferences
@@ -133,13 +134,15 @@ export function createProfile(
   cv_text = '',
   portfolio_url = '',
   github_url = '',
-  linkedin_url = ''
+  linkedin_url = '',
+  phone = ''
 ) {
   if (typeof name === 'object' && name !== null) {
     const p = name;
     return {
       name: (p.name || '').trim(),
       email: (p.email || '').trim(),
+      phone: (p.phone || '').trim(),
       skills: [...(p.skills || [])],
       education: [...(p.education || [])],
       preferences: { ...(p.preferences || createPreferences()) },
@@ -154,6 +157,7 @@ export function createProfile(
   return {
     name: (name || '').trim(),
     email: (email || '').trim(),
+    phone: (phone || '').trim(),
     skills: [...skills],
     education: [...education],
     preferences: { ...preferences },

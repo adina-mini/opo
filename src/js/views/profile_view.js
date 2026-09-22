@@ -23,7 +23,7 @@ export function renderProfileView(container, onNavigate) {
       <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
         <div>
           <h2 class="serif-title" style="font-size: 1.75rem; margin-bottom: 4px;">${profile.name}</h2>
-          <p style="font-size: 0.85rem; color: var(--color-text-muted);">${profile.email}</p>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">${profile.email}${profile.phone ? ` • 📞 ${profile.phone}` : ''}</p>
         </div>
         <button id="edit-profile-btn" class="btn btn-secondary btn-sm">Edit Full Profile</button>
       </div>

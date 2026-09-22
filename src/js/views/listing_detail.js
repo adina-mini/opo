@@ -347,6 +347,11 @@ export function openAutofillAssistantModal(profile, app, targetUrl, onUpdate) {
           <button type="button" class="btn btn-secondary btn-sm copy-cred-btn" data-value="${profile.email}">
             📋 Email: ${profile.email}
           </button>
+          ${profile.phone ? `
+            <button type="button" class="btn btn-secondary btn-sm copy-cred-btn" data-value="${profile.phone}">
+              📋 Phone: ${profile.phone}
+            </button>
+          ` : ''}
           ${profile.portfolio_url ? `
             <button type="button" class="btn btn-secondary btn-sm copy-cred-btn" data-value="${profile.portfolio_url}">
               📋 Portfolio URL

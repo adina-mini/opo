@@ -193,7 +193,7 @@ export function renderOnboarding(container, onComplete) {
               ⚡ Quick Fill (Testing)
             </button>
           </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px;">
             <div class="form-group" style="margin-bottom: 0;">
               <label class="form-label" for="user-name">Full Name *</label>
               <input type="text" id="user-name" class="form-input" required value="${existingProfile?.name || ''}" placeholder="e.g. Alex Chen" />
@@ -201,6 +201,10 @@ export function renderOnboarding(container, onComplete) {
             <div class="form-group" style="margin-bottom: 0;">
               <label class="form-label" for="user-email">Email Address *</label>
               <input type="email" id="user-email" class="form-input" required value="${existingProfile?.email || ''}" placeholder="alex@example.com" />
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="user-phone">Phone Number</label>
+              <input type="tel" id="user-phone" class="form-input" value="${existingProfile?.phone || ''}" placeholder="+1 (555) 000-0000" />
             </div>
           </div>
 
@@ -528,6 +532,7 @@ export function renderOnboarding(container, onComplete) {
     if (extracted) {
       const nameInput = container.querySelector('#user-name');
       const emailInput = container.querySelector('#user-email');
+      const phoneInput = container.querySelector('#user-phone');
       const linkedinInput = container.querySelector('#user-linkedin');
       const githubInput = container.querySelector('#user-github');
       const portfolioInput = container.querySelector('#user-portfolio');
@@ -537,6 +542,9 @@ export function renderOnboarding(container, onComplete) {
       }
       if (extracted.email && !emailInput.value.trim()) {
         emailInput.value = extracted.email;
+      }
+      if (extracted.phone && phoneInput && !phoneInput.value.trim()) {
+        phoneInput.value = extracted.phone;
       }
       if (extracted.linkedin_url && !linkedinInput.value.trim()) {
         linkedinInput.value = extracted.linkedin_url;
@@ -647,6 +655,7 @@ export function renderOnboarding(container, onComplete) {
     quickFillBtn.onclick = () => {
       container.querySelector('#user-name').value = 'Adina Khan';
       container.querySelector('#user-email').value = 'adina@example.com';
+      if (container.querySelector('#user-phone')) container.querySelector('#user-phone').value = '+1 (555) 019-2834';
       container.querySelector('#user-cv-text').value = 'AI Software Engineer with 2+ years experience building autonomous agent workflows, LangGraph pipelines, and FastAPI microservices. Contributor to open-source RAG evaluation frameworks. First-class honors in BS Artificial Intelligence from FAST-NUCES.';
       container.querySelector('#user-portfolio').value = 'https://adina-ai.dev';
       container.querySelector('#user-github').value = 'https://github.com/adinakhan';
@@ -676,6 +685,7 @@ export function renderOnboarding(container, onComplete) {
 
     const name = container.querySelector('#user-name').value.trim();
     const email = container.querySelector('#user-email').value.trim();
+    const phone = container.querySelector('#user-phone')?.value.trim() || '';
     const groqKey = keyInput.value.trim();
     const cvText = container.querySelector('#user-cv-text')?.value.trim() || '';
     const portfolioUrl = container.querySelector('#user-portfolio')?.value.trim() || '';
@@ -720,6 +730,7 @@ export function renderOnboarding(container, onComplete) {
     const newProfile = createProfile({
       name,
       email,
+      phone,
       skills,
       education: educationList,
       preferences,

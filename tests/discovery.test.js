@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { stripHtml, calculateDeadlineUrgency, parseSalaryCompensation } from '../src/js/discovery.js';
 import { cleanReasoningOutput } from '../src/js/groq.js';
 import { isDuplicate, deduplicateListings, normalizeString } from '../src/js/dedupe.js';
-import { createListing, createRequirement, OpportunityType, LocationMode } from '../src/js/models.js';
+import { createListing, createRequirement, OpportunityType, LocationMode, createProfile } from '../src/js/models.js';
 import { TEST_FIXTURES } from './fixtures/sample_opportunities.js';
 
 describe('Discovery & Deduplication Engine', () => {
@@ -56,6 +56,22 @@ describe('Discovery & Deduplication Engine', () => {
     expect(cleaned).toBe('{"required": ["python"], "preferred": []}');
     expect(cleaned).not.toContain('<think>');
     expect(cleaned).not.toContain('</think>');
+  });
+
+  it('creates profile with phone, portfolio, github, and linkedin fields', () => {
+    const p1 = createProfile({
+      name: 'Adina',
+      email: 'adina@example.com',
+      phone: '+1 555-0199',
+      portfolio_url: 'https://adina.dev',
+      github_url: 'https://github.com/adina',
+      linkedin_url: 'https://linkedin.com/in/adina'
+    });
+    expect(p1.phone).toBe('+1 555-0199');
+    expect(p1.portfolio_url).toBe('https://adina.dev');
+
+    const p2 = createProfile('Adina', 'adina@example.com', [], [], undefined, {}, '', 'https://adina.dev', 'https://github.com/adina', 'https://linkedin.com/in/adina', '+1 555-0199');
+    expect(p2.phone).toBe('+1 555-0199');
   });
 
 
