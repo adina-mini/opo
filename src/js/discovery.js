@@ -366,123 +366,6 @@ export function parseSalaryCompensation(salaryStr) {
   return null;
 }
 
-/**
- * Curated, high-signal scholarship, grant, research, and fellowship opportunities
- * with verified approaching deadlines, compensation, and funding.
- * @param {Object} options
- * @param {string} [options.search]
- * @returns {import('./models.js').Listing[]}
- */
-export function fetchScholarshipsAndFellowships({ search = '' } = {}) {
-  const items = [
-    createListing({
-      id: 'scholarship_frontier_ai_01',
-      title: 'MLH Open Source AI Fellowship',
-      organization: 'Major League Hacking & Meta',
-      opportunity_type: OpportunityType.FELLOWSHIP,
-      requirements: [
-        createRequirement('Python', RequirementImportance.REQUIRED),
-        createRequirement('Machine Learning', RequirementImportance.REQUIRED),
-        createRequirement('PyTorch', RequirementImportance.PREFERRED),
-        createRequirement('Research', RequirementImportance.REQUIRED)
-      ],
-      location_mode: LocationMode.REMOTE,
-      is_funded: true,
-      compensation: 4200,
-      unpaid: false,
-      deadline: '2026-09-21', // 4 days from reference date (URGENT!)
-      source_urls: ['https://fellowship.mlh.io/'],
-      raw_description: 'Full-time remote 12-week educational fellowship focusing on open-weights model fine-tuning and production evaluation. Includes educational stipend and direct mentorship.',
-      unusual_requirements: ['github portfolio link', 'code sample demonstration']
-    }),
-    createListing({
-      id: 'grant_nextgen_creators_02',
-      title: 'Mozilla Technology Fund & Open Source Grant',
-      organization: 'Mozilla Foundation',
-      opportunity_type: OpportunityType.GRANT,
-      requirements: [
-        createRequirement('Open Source', RequirementImportance.REQUIRED),
-        createRequirement('Software Architecture', RequirementImportance.PREFERRED)
-      ],
-      location_mode: LocationMode.REMOTE,
-      is_funded: true,
-      compensation: 5000,
-      unpaid: false,
-      deadline: '2026-09-22', // 5 days from reference date (URGENT!)
-      source_urls: ['https://foundation.mozilla.org/en/what-we-fund/awards/'],
-      raw_description: 'Direct project grant for independent builders creating open-source tools that protect public interest. Paid upon project milestone acceptance.',
-      unusual_requirements: ['project demo link or prototype']
-    }),
-    createListing({
-      id: 'internship_google_summer_03',
-      title: 'Google Summer of Code Open Source Fellow',
-      organization: 'Google Open Source',
-      opportunity_type: OpportunityType.INTERNSHIP,
-      requirements: [
-        createRequirement('Python', RequirementImportance.REQUIRED),
-        createRequirement('Git', RequirementImportance.REQUIRED),
-        createRequirement('FastAPI', RequirementImportance.PREFERRED)
-      ],
-      location_mode: LocationMode.REMOTE,
-      is_funded: true,
-      compensation: 3200,
-      unpaid: false,
-      deadline: '2026-09-24', // 7 days from reference date (URGENT!)
-      source_urls: ['https://summerofcode.withgoogle.com/'],
-      raw_description: 'Global online mentoring program focused on introducing contributors to open source software development. Generous project stipend.',
-      unusual_requirements: ['project proposal summary']
-    }),
-    createListing({
-      id: 'fellowship_climate_tech_04',
-      title: 'DAAD Research & International Climate Grant',
-      organization: 'German Academic Exchange Service',
-      opportunity_type: OpportunityType.FELLOWSHIP,
-      requirements: [
-        createRequirement('Data Analysis', RequirementImportance.REQUIRED),
-        createRequirement('Python', RequirementImportance.REQUIRED),
-        createRequirement('GIS', RequirementImportance.PREFERRED)
-      ],
-      location_mode: LocationMode.HYBRID,
-      countries: ['Germany', 'Remote'],
-      is_funded: true,
-      compensation: 4800,
-      unpaid: false,
-      deadline: '2026-10-15', // 28 days left
-      source_urls: ['https://www.daad.de/en/study-and-research-in-germany/scholarships/'],
-      raw_description: 'Investigating computational models for ecological monitoring and climate informatics. Generous international research stipend.',
-      unusual_requirements: ['two academic references']
-    }),
-    createListing({
-      id: 'scholarship_women_tech_05',
-      title: 'Fulbright International Postgraduate Scholarship',
-      organization: 'US-International Educational Commission',
-      opportunity_type: OpportunityType.SCHOLARSHIP,
-      requirements: [
-        createRequirement('Computer Science', RequirementImportance.REQUIRED),
-        createRequirement('Data Structures', RequirementImportance.PREFERRED)
-      ],
-      location_mode: LocationMode.REMOTE,
-      is_funded: true,
-      compensation: 6000,
-      unpaid: false,
-      deadline: '2026-10-31',
-      source_urls: ['https://foreign.fulbrightonline.org/'],
-      raw_description: 'Prestigious fellowship covering full tuition, living expenses, and health insurance for exceptional scholars.',
-      unusual_requirements: ['academic transcript', 'personal statement']
-    })
-
-  ];
-
-  if (!search || !search.trim()) return items;
-  const q = search.toLowerCase().trim();
-  return items.filter(it =>
-    it.title.toLowerCase().includes(q) ||
-    it.organization.toLowerCase().includes(q) ||
-    it.opportunity_type.toLowerCase().includes(q) ||
-    it.raw_description.toLowerCase().includes(q) ||
-    it.requirements.some(r => r.skill.toLowerCase().includes(q))
-  );
-}
 
 /**
  * Coordinates discovery across real live sources, deduplicates, and enriches listings.
@@ -507,9 +390,6 @@ export async function discoverOpportunities({ search = '', enrichWithGroq = true
     allListings.push(...arbeitnowRes.value);
   }
 
-  // Add scholarships and fellowships
-  const scholarshipItems = fetchScholarshipsAndFellowships({ search });
-  allListings.push(...scholarshipItems);
 
   // Deduplicate across sources
   const deduped = deduplicateListings(allListings);

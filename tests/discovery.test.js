@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { stripHtml, calculateDeadlineUrgency, parseSalaryCompensation, fetchScholarshipsAndFellowships } from '../src/js/discovery.js';
+import { stripHtml, calculateDeadlineUrgency, parseSalaryCompensation } from '../src/js/discovery.js';
 import { cleanReasoningOutput } from '../src/js/groq.js';
 import { isDuplicate, deduplicateListings, normalizeString } from '../src/js/dedupe.js';
 import { createListing, createRequirement, OpportunityType, LocationMode } from '../src/js/models.js';
@@ -58,15 +58,8 @@ describe('Discovery & Deduplication Engine', () => {
     expect(cleaned).not.toContain('</think>');
   });
 
-  it('provides scholarships and fellowships with verified metadata', () => {
-    const items = fetchScholarshipsAndFellowships();
-    expect(items.length).toBeGreaterThanOrEqual(4);
-    const hasUrgent = items.some(it => {
-      const u = calculateDeadlineUrgency(it.deadline, new Date('2026-09-17'));
-      return u.isUrgent;
-    });
-    expect(hasUrgent).toBe(true);
-  });
+
+
 
   it('normalizes organization names and titles for fuzzy comparison', () => {
     expect(normalizeString('Google LLC')).toBe('google');
