@@ -529,6 +529,8 @@ export function renderOnboarding(container, onComplete) {
       const nameInput = container.querySelector('#user-name');
       const emailInput = container.querySelector('#user-email');
       const linkedinInput = container.querySelector('#user-linkedin');
+      const githubInput = container.querySelector('#user-github');
+      const portfolioInput = container.querySelector('#user-portfolio');
 
       if (extracted.name && !nameInput.value.trim()) {
         nameInput.value = extracted.name;
@@ -538,6 +540,12 @@ export function renderOnboarding(container, onComplete) {
       }
       if (extracted.linkedin_url && !linkedinInput.value.trim()) {
         linkedinInput.value = extracted.linkedin_url;
+      }
+      if (extracted.github_url && githubInput && !githubInput.value.trim()) {
+        githubInput.value = extracted.github_url;
+      }
+      if (extracted.portfolio_url && portfolioInput && !portfolioInput.value.trim()) {
+        portfolioInput.value = extracted.portfolio_url;
       }
 
       // Merge extracted skills (don't replace existing ones the user set up)
