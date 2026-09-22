@@ -440,13 +440,17 @@ Rules:
    - "beginner" = briefly mentioned, coursework-only, or listed as "familiar with" / "exposure to".
 4. For each skill, infer a short category if obvious (e.g. "programming", "design", "healthcare", "analytics", "language", "management"). Use null if unclear.
 5. Extract LinkedIn URL if present in the resume.
-6. Do NOT invent information not present in the text. If a field is absent, omit it or use null.
+6. Extract GitHub URL if present in the resume (e.g. https://github.com/username).
+7. Extract portfolio or personal website URL if present in the resume.
+8. Do NOT invent information not present in the text. If a field is absent, omit it or use null.
 
 Output ONLY valid JSON with this exact shape:
 {
   "name": "Full Name",
   "email": "email@example.com",
   "linkedin_url": "https://linkedin.com/in/...",
+  "github_url": "https://github.com/...",
+  "portfolio_url": "https://example.com",
   "education": [
     { "degree": "BS Computer Science", "institution": "MIT", "graduation_date": "2024", "gpa": 3.9 }
   ],
@@ -608,6 +612,8 @@ export async function extractProfileFromCV(cvText, customApiKey = null) {
     name: (parsed.name || '').trim(),
     email: (parsed.email || '').trim(),
     linkedin_url: (parsed.linkedin_url || '').trim(),
+    github_url: (parsed.github_url || '').trim(),
+    portfolio_url: (parsed.portfolio_url || '').trim(),
     skills: Array.isArray(parsed.skills)
       ? parsed.skills.map(normalizeSkill).filter(Boolean)
       : [],
