@@ -43,15 +43,6 @@ It finds, scores, and prepares; you make the final call.
 - A serverless proxy (`api/proxy.js`) as a CORS fallback for discovery
   sources that block direct browser requests.
 
-## Getting started
-
-```bash
-npm install
-npm run dev
-```
-
-Open the local URL it gives you, enter your Groq API key (free tier
-available at console.groq.com), and follow onboarding.
 
 ## Known gaps
 
